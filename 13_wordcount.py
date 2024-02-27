@@ -53,10 +53,34 @@ e conferindo cada etapa do seu progresso.
 
 import sys
 
-
 # +++ SUA SOLUÇÃO +++
 # Defina as funções print_words(filename) e print_top(filename).
-
+def print_words(filename):
+    ref_arquivo = open(filename, "r")
+    order_list = {}
+    for line in ref_arquivo:
+        for word in line.split():
+            if word.lower() in order_list:
+                contar = order_list.get(word.lower())
+                contar += 1
+                order_list[word.lower()] = contar
+            else:
+                order_list[word.lower()] = 1
+    for items in sorted(order_list):
+        print(items, order_list.get(items))
+    ref_arquivo.close()
+def print_top(filename):
+    ref_arquivo = open(filename, 'r')
+    full_order = {}
+    for line in ref_arquivo:
+        for word in line.lower().split():
+            if word in full_order:
+                full_order[word] = full_order.get(word)+1
+            else:
+                full_order[word] = 1
+    for newitens in sorted(full_order, key=full_order.get, reverse=True):
+        print(newitens, full_order[newitens])
+    ref_arquivo.close()
 
 # A função abaixo chama print_words() ou print_top() de acordo com os
 # parêtros do programa.
@@ -72,7 +96,7 @@ def main():
     elif option == '--topcount':
         print_top(filename)
     else:
-        print('unknown option: ' + option)
+        print('unçknown option: ' + option)
         sys.exit(1)
 
 
